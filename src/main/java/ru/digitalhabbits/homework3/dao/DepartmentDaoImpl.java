@@ -7,6 +7,7 @@ import ru.digitalhabbits.homework3.domain.Department;
 import javax.annotation.Nonnull;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Repository
@@ -19,24 +20,29 @@ public class DepartmentDaoImpl
     @Override
     public Department findById(@Nonnull Integer integer) {
         // TODO: NotImplemented
-        throw new NotImplementedException();
+        return entityManager.find(Department.class, integer);
+
     }
 
     @Override
     public List<Department> findAll() {
         // TODO: NotImplemented
-        throw new NotImplementedException();
+        Query findAllDepartment = entityManager.createQuery("Select '*' from Department", Department.class);
+        return findAllDepartment.getResultList();
     }
 
     @Override
     public Department update(Department entity) {
         // TODO: NotImplemented
-        throw new NotImplementedException();
+        entityManager.persist(entity);
+        return entity;
     }
 
     @Override
     public Department delete(Integer integer) {
         // TODO: NotImplemented
-        throw new NotImplementedException();
+        Department department = this.findById(integer);
+        entityManager.remove(department);
+        return department;
     }
 }
